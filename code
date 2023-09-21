@@ -1,0 +1,37 @@
+const int motor =2;
+const int piezo =12;
+const int bulb =13;
+int I;
+int motion;
+int moisture;
+
+void setup () {
+  Serial.begin(9600);
+  pinMode(motor,OUTPUT);
+  pinMode(piezo,OUTPUT);
+  pinMode(bulb,OUTPUT);
+  pinMode(3,INPUT);
+  pinMode(A1,INPUT);
+  pinMode(A2,INPUT);
+}
+
+void loop () {
+  moisture=analogRead(A1);
+  Serial.println(moisture);
+  motion=digitalRead(3);
+  I =analogRead(A2);
+  digitalWrite(motor,LOW);
+  digitalWrite(bulb,LOW);
+  if (moisture<300) {
+    digitalWrite(motor,HIGH);
+  }
+  if (motion==HIGH) {
+    tone(piezo,750);
+    delay(5000);
+    noTone(piezo);
+  }
+  if(I<500) {
+    digitalWrite(bulb,HIGH);
+  }
+  delay(100);	  
+}
